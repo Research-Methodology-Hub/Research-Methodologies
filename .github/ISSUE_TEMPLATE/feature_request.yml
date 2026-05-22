@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a new methodology, guide content, or improvement
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: Propose new content (e.g. a methodology) or a product improvement. For large changes, please open this before sending a PR.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What's missing or hard today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to see? For a new methodology, name the discipline and outline its steps.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false

@@ -1,0 +1,137 @@
+.landing {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.landing__grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.landing__hero {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(48px, 12vh, 120px) clamp(20px, 6vw, 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.landing__eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 24px;
+}
+
+.landing__title {
+  font-size: clamp(40px, 7vw, 76px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin: 0 0 28px;
+  max-width: 12ch;
+}
+
+.landing__title-accent {
+  color: var(--accent);
+}
+
+.landing__lede {
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.6;
+  max-width: 52ch;
+  opacity: 0.78;
+  margin: 0 0 40px;
+}
+
+.landing__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.landing__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 24px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+
+.landing__btn:hover {
+  transform: translateY(-1px);
+}
+
+.landing__btn--primary {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.landing__btn--ghost {
+  border: 1px solid rgba(10, 37, 64, 0.3);
+  color: var(--ink);
+}
+
+.landing__btn--ghost:hover {
+  background: rgba(10, 37, 64, 0.05);
+}
+
+.landing__footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px clamp(20px, 6vw, 72px);
+  border-top: 1px solid rgba(10, 37, 64, 0.12);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.landing__footer-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.landing__footer-credit {
+  opacity: 0.85;
+  font-weight: 700;
+}
+
+.landing__footer-note {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .landing__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

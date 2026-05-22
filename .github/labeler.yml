@@ -1,0 +1,16 @@
+# Path-based auto-labels for PRs (actions/labeler v5 schema).
+web:
+  - changed-files:
+      - any-glob-to-any-file: 'web/**'
+
+guide-content:
+  - changed-files:
+      - any-glob-to-any-file: 'web/src/guide/**'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.md', 'doc/**']

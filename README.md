@@ -72,7 +72,7 @@ npm run build    # production build
 1. **Explore** — browse the folders to find guidelines matching your research topic.
 2. **Clone** — get a local copy to use the templates:
    ```bash
-   git clone https://github.com/Research-Methodology-Hub/computer-science-ai-data.git
+   git clone https://github.com/Research-Methodology-Hub/Research-Methodologies.git
    ```
 3. **Adapt** — modify the templates to fit your specific research project and constraints.
 
