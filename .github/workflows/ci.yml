@@ -16,8 +16,71 @@ defaults:
     working-directory: web
 
 jobs:
+  preflight:
+    name: Preflight scope detection
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    outputs:
+      areas: ${{ steps.scope.outputs.areas }}
+      docs_only: ${{ steps.scope.outputs.docs_only }}
+      code: ${{ steps.scope.outputs.code }}
+      platform: ${{ steps.scope.outputs.platform }}
+      plugins: ${{ steps.scope.outputs.plugins }}
+      run_heavy_suites: ${{ steps.scope.outputs.run_heavy_suites }}
+      manifest_path: ${{ steps.scope.outputs.manifest_path }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Resolve diff range
+        id: range
+        run: |
+          event="${{ github.event_name }}"
+          base="${{ github.event.before }}"
+          head="${{ github.sha }}"
+
+          if [ "$event" = "pull_request" ]; then
+            base="${{ github.event.pull_request.base.sha }}"
+            head="HEAD"
+          fi
+
+          if [ "$event" = "workflow_dispatch" ]; then
+            base="$(git rev-parse HEAD^ 2>/dev/null || git rev-list --max-parents=0 HEAD)"
+            head="HEAD"
+          fi
+
+          if [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            base="$(git rev-list --max-parents=0 HEAD)"
+          fi
+
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+          echo "head=$head" >> "$GITHUB_OUTPUT"
+
+      - name: Detect scope
+        id: scope
+        run: |
+          git diff --name-only "${{ steps.range.outputs.base }}" "${{ steps.range.outputs.head }}" > changed-files.txt
+          node tools/ci/preflight-scope.mjs --manifest preflight-scope.json --summary preflight-scope.md < changed-files.txt
+
+      - name: Publish summary
+        run: cat preflight-scope.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: preflight-scope
+          path: |
+            changed-files.txt
+            preflight-scope.json
+            preflight-scope.md
+
   build:
     name: Lint, type-check & build
+    needs: preflight
+    if: needs.preflight.outputs.run_heavy_suites == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
